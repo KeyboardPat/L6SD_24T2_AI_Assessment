@@ -29,7 +29,7 @@ print(data.isnull().sum())
 
 #Create the input dataset from the original dataset by dropping the irrelevant
 #store input variables in x
-x= data.drop(['Client Name', 'Client e-mail', 'Country', 'Healthcare Cost'], axis=1)
+x= data.drop(['Client Name', 'Client e-mail', 'Profession', 'Education', 'Country', 'Healthcare Cost'], axis=1)
 print(x)
 
 #create the output dataset from the original dataset
@@ -104,7 +104,7 @@ print(f"XGB Regressor RMSE: {xgb_rmse}")
 #Visualize RMSE values
 def visualize_rmse(model_rmse):
     plt.figure(figsize=(10, 7))
-    bars = plt.bar(model_rmse.keys(), model_rmse.values(), color=['blue', 'green', 'red', 'purple', 'orange', 'cyan', 'magenta', 'yellow', 'black', 'grey'])
+    bars = plt.bar(model_rmse.keys(), model_rmse.values(), color=['blue', 'green', 'red', 'purple', 'orange'])
     
     for bar in bars:
         yval = bar.get_height()
@@ -117,7 +117,7 @@ def visualize_rmse(model_rmse):
     plt.tight_layout()
     plt.show()
 
-visualize_rmse()
+visualize_rmse(model_rmse)
 
 #Save the model
 dump(best_model_object, "networth_model.joblib")
