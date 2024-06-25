@@ -170,3 +170,23 @@ dump(best_model_object, "networth_model.joblib")
 
 #Load the model
 loaded_model = load("networth_model.joblib")
+
+#Gather user inputs
+gender = int(input("Enter gender (0 for female, 1 for male): "))
+age = int(input("Enter age: "))
+income = float(input("Enter annual salary: "))
+credit_card_debt = float(input("Enter credit card debt: "))
+healthcare_cost = int(input("Enter 1 for healthcare cost: "))
+inherited_amount = float(input("Enter inherited amount: "))
+stocks = float(input("Enter stocks: "))
+bonds = float(input("Enter bonds: "))
+mutual_funds = float(input("Enter mutual funds: "))
+EFTs = float(input("Enter EFTS: "))
+REITs = float(input("Enter REITs: "))
+
+#Use model to make predictions based on user input
+x_test1 = sc.transform([[gender, age, income, credit_card_debt, healthcare_cost, inherited_amount, stocks, bonds, mutual_funds, EFTs, REITs]])
+#Predict on new test data
+pred_value = loaded_model.predict(x_test1)
+print(pred_value)
+print("Predicted Net Worth based on input: ", sc1.inverse_transform(pred_value))
