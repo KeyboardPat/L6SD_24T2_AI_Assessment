@@ -9,6 +9,23 @@ from sklearn.model_selection import train_test_split
 from joblib import dump, load
 
 #Import the dataset
+def load_data(data):
+    data = pd.read_excel('Net_Worth_Data.xlsx')
+    return data
+
+def preprocess_data(data):
+    x= data.drop(['Client Name', 'Client e-mail', 'Profession', 'Education', 'Country', 'Healthcare Cost'], axis=1)
+    y= data['Net Worth']
+    sc = MinMaxScaler()
+    x_scaled = sc.fit_transform(x)
+    sc1 = MinMaxScaler()
+    y_reshape = y.values.reshape(-1, 1)
+    y_scaled = sc1.fit_transform(y_reshape)
+    return x_scaled, y_scaled, sc, sc1
+
+def split_data(x_scaled, y_scaled):
+    train_test_split(x_scaled, y_scaled, test_size = 0.2, random_state = 42)
+
 data = pd.read_excel('Net_Worth_Data.xlsx')
 
 #Display the first 5 rows
@@ -47,6 +64,11 @@ sc1 = MinMaxScaler()
 y_reshape = y.values.reshape(-1, 1)
 y_scaled = sc1.fit_transform(y_reshape)
 print(y_scaled)
+
+#Print first few rows of scaled input dataset
+print("First 5 rows of scaled input dataset\n", x_scaled[:5], y_scaled[:5])
+#Print last few rows of scaled output dataset
+print("Last 5 rows of scaled input dataset\n", x_scaled[5:], y_scaled[5:])
 
 #Split data into training and testing sets
 x_train, x_test, y_train, y_test = train_test_split(x_scaled, y_scaled, test_size = 0.2, random_state = 42)
@@ -102,22 +124,22 @@ print(f"XGB Regressor RMSE: {xgb_rmse}")
 
 #Visualize model results by creating a bar chart
 #Visualize RMSE values
-def visualize_rmse(model_rmse):
-    plt.figure(figsize=(10, 7))
-    bars = plt.bar(model_rmse.keys(), model_rmse.values(), color=['blue', 'green', 'red', 'purple', 'orange'])
+# #def visualize_rmse(model_rmse):
+#     #plt.figure(figsize=(5, 11))
+#     bars = plt.bar(model_rmse.keys(), model_rmse.values(), color=['blue', 'green', 'red', 'purple', 'orange'])
     
-    for bar in bars:
-        yval = bar.get_height()
-        plt.text(bar.get_x() + bar.get_width()/2, yval + 0.00001, round(yval, 5), ha='center', va='bottom', fontsize=10)
+#     for bar in bars:
+#         yval = bar.get_height()
+#         plt.text(bar.get_x() + bar.get_width()/2, yval + 0.00001, round(yval, 5), ha='center', va='bottom', fontsize=10)
     
-    plt.xlabel('Models')
-    plt.ylabel('Root Mean Squared Error (RMSE)')
-    plt.title('Model RMSE Comparison')
-    plt.xticks(rotation=45)
-    plt.tight_layout()
-    plt.show()
+#     plt.xlabel('Models')
+#     plt.ylabel('Root Mean Squared Error (RMSE)')
+#     plt.title('Model RMSE Comparison')
+#     plt.xticks(rotation=45)
+#     plt.tight_layout()
+#     plt.show()
 
-visualize_rmse(model_rmse)
+#visualize_rmse(model_rmse)
 
 #Save the model
 dump(best_model_object, "networth_model.joblib")
