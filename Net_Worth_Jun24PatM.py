@@ -86,10 +86,10 @@ Ri = Ridge
 svr = SVR()
 rf = RandomForestRegressor()
 gbr = GradientBoostingRegressor()
-Ada = AdaBoostRegressor
-ExtTr = ExtraTreesRegressor
+Ada = AdaBoostRegressor()
+ExtTr = ExtraTreesRegressor()
 xgb = XGBRegressor()
-dtr = DecisionTreeRegressor
+dtr = DecisionTreeRegressor()
 
 #Train models using training data
 lr.fit(x_train, y_train)
