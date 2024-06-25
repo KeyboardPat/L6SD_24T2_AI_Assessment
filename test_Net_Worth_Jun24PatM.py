@@ -23,8 +23,8 @@ def test_shape_of_data():
 #Test case to ensure the correct columns for Input
 def test_columns_X():
     data = load_data('Net_Worth_Data.xlsx')
-    X, _, _, _ = preprocess_data, (load_data)
-    input_columns = ['Gender', 'Age', 'Income', 'Credit Card Debt', 'Inherited Amount', 'Stocks', 'Bonds', 'Mutual Funds', 'EFTs', 'REITs']
+    X, _, _, _ = preprocess_data(data)
+    input_columns = ['Gender', 'Age', 'Income', 'Credit Card Debt', 'Healthcare Cost', 'Inherited Amount', 'Stocks', 'Bonds', 'Mutual Funds', 'EFTs', 'REITs']
     # Convert the NumPy array to a DataFrame
     X_df = pd.DataFrame(X, columns=input_columns)
     # Check if X_df is a DataFrame
@@ -35,12 +35,11 @@ def test_columns_X():
     assert "Profession" not in X_df.columns
     assert "Education" not in X_df.columns
     assert "Country" not in X_df.columns
-    assert "Healthcare Cost" not in X_df.columns
 
 #Test case to ensure the correct column for output
 def test_columns_Y():
-    Data = load_data('Net_Worth_Jun24PatM.xlsx')
-    _, Y, _, _ = preprocess_data(load_data)
+    Data = load_data('Net_Worth_Data.xlsx')
+    _, Y, _, _ = preprocess_data(Data)
     # Convert the NumPy array to a DataFrame
     Y_df = pd.DataFrame(Y, columns=['Net Worth'])
     
